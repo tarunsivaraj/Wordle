@@ -16,7 +16,7 @@ Stack *stack_create(void) {
 // so (eg, if memory allocation fails).
 bool stack_push(Stack *s, CalculatorItem item) {
   Node *n1 = (Node *)calloc(1, sizeof(Node));
-  if (s == NULL || (s->top == NULL)) {
+  if (n1 == NULL) {
     return false;
   }
   n1->item = item;
@@ -77,59 +77,58 @@ bool stack_compute_step(Stack *s, CalculatorItem item) {
   CalculatorItem y;
   CalculatorItem res;
 
-  printf("%u\n", item.type);
+  
 
   if(item.type == ADD){
     stack_pop(s, &item);
     x.value = item.value;
-    printf("the x value: %f\n", x.value);
+    
     stack_pop(s, &item);
     y.value = item.value;
-    printf("the y value: %f\n", y.value);
+    
     res.value = y.value + x.value;
     res.type = NUMBER;
     stack_push(s, res);
-    printf("%f\n", res.value);
-    printf("%u\n", res.type);
+    
   }
   else if(item.type == SUBTRACT){
     stack_pop(s, &item);
     x.value = item.value;
-    printf("the x value: %f\n", x.value);
+    
     stack_pop(s, &item);
     y.value = item.value;
-    printf("the y value: %f\n", y.value);
+    
     res.value = y.value - x.value;
     stack_push(s, res);
-    printf("%f\n", res.value);
+    
   }
   else if(item.type == MULTIPLY){
     stack_pop(s, &item);
     x.value = item.value;
-    printf("the x value: %f\n", x.value);
+    
     stack_pop(s, &item);
     y.value = item.value;
-    printf("the y value: %f\n", y.value);
+    
     res.value = y.value * x.value;
     stack_push(s, res);
-    printf("%f\n", res.value);
+    
   }
   else if(item.type == DIVIDE){
     stack_pop(s, &item);
     x.value = item.value;
-    printf("the x value: %f\n", x.value);
+    
     stack_pop(s, &item);
     y.value = item.value;
-    printf("the y value: %f\n", y.value);
+    
     res.value = y.value / x.value;
     stack_push(s, res);
-    printf("%f\n", res.value);
+    
   }
   else if (item.type == NUMBER){
     //x.value = item.value;
-    printf("pushpushpush %f\n", item.value);
+    
     stack_push(s, item);
-    printf("pushpushpush %f\n", item.value);
+    
   }
   else{
     return false;
