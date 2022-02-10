@@ -154,7 +154,7 @@ unsigned long compute_availability(unsigned long *calendars, int num_users) {
     calendars[0] = calendars[0] & calendars[x];
   }
 
-  unsigned long availability = calendars[0];
+  //unsigned long availability = calendars[0];
 
   unsigned long conv = dectobin(calendars[0]);
   return conv;
@@ -163,15 +163,16 @@ unsigned long compute_availability(unsigned long *calendars, int num_users) {
 // put examples for testing your functions in the main! You're going to have to
 // figure out how to test these.
 int main(void) {
+  /*
   // question 1
-    int n = 10;
-    long long* f = fibonacci_numbers(n);
+    //int n = 10;
+    //long long* f = fibonacci_numbers(n);
 //    printf("%p\n", f);
-    for (int x = 0; x < n; x++) {
-        printf("%lld\n", f[x]);
-    }
+    //for (int x = 0; x < n; x++) {
+        //printf("%lld\n", f[x]);
+    //}
     
-    /*
+    
   // question 2
     int n_customers = 6;
     ShoeCustomer *customers = (ShoeCustomer* )calloc(n_customers, sizeof(ShoeCustomer));
