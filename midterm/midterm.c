@@ -136,6 +136,21 @@ LLfloat *map_floats(float (*f)(float), LLfloat *numbers)  {
 
 // PROBLEM 4
 
+unsigned long dectobin(unsigned long x) {
+  unsigned long binary = 0;
+  int y = 1;
+  int z = 1;
+
+  while(x != 0) {
+    y = x % 2;
+    x = x / 2;
+    binary = binary + y * z;
+    z = z * 10;
+  }
+  return binary;
+  
+}
+
 unsigned long compute_availability(unsigned long *calendars, int num_users) {
 
   for (int x = 0; x < num_users; x++) {
@@ -143,7 +158,9 @@ unsigned long compute_availability(unsigned long *calendars, int num_users) {
   }
 
   unsigned long availability = calendars[0];
-  return availability;
+
+  unsigned long conv = dectobin(calendars[0]);
+  return conv;
 }
 
 // put examples for testing your functions in the main! You're going to have to
