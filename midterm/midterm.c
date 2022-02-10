@@ -43,9 +43,6 @@ long long *fibonacci_numbers(int n) {
     
     return fib;
 
-    long long* output = NULL;
-
-    return output;  
 }
 
 
@@ -167,12 +164,14 @@ unsigned long compute_availability(unsigned long *calendars, int num_users) {
 // figure out how to test these.
 int main(void) {
   // question 1
-/*    int n = 10;
+    int n = 10;
     long long* f = fibonacci_numbers(n);
 //    printf("%p\n", f);
     for (int x = 0; x < n; x++) {
         printf("%lld\n", f[x]);
     }
+    
+    /*
   // question 2
     int n_customers = 6;
     ShoeCustomer *customers = (ShoeCustomer* )calloc(n_customers, sizeof(ShoeCustomer));
