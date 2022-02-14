@@ -29,14 +29,14 @@ bool set_contains(LLint *set, int val) {
 // Usually this will be the old front of the queue, but if q is NULL, then it
 // will allocate a new linked list node and return that.
 LLPath *enqueue_path(LLPath *q, Path path) {
-  LLint *newnode = calloc(1, sizeof(LLint));
-  newnode->path = path;
+  LLPath *newnode = calloc(1, sizeof(LLPath));
+  newnode->val = path;
 
   if (q == NULL) {
     return newnode;
   }
 
-  LLint *cur = q;
+  LLPath *cur = q;
   while(cur->next != NULL) {
     cur = cur->next;
   }
@@ -50,12 +50,20 @@ bool dequeue_path(LLPath **q, Path *ret) {
     return false;
   }
 
-  *ret = (*q)->path;
+  *ret = (*q)->val;
   
-  LLint *freethis = *q;
+  LLPath *freethis = *q;
   *q = (*q)->next;
   free(freethis);
   return true;
+
+}
+
+LLPath *push(LLPath *s Path x ) {
+  
+}
+
+bool pop(LLPath **s, Path *y) {
 
 }
 
@@ -107,17 +115,70 @@ void print_path(Path path) {
 
 // Breadth-first search!
 Path graph_find_path_bfs(Graph *g, int i, int j) {
-  // YOUR CODE HERE.
-
+  LLint *visited = NULL;
+  LLPath *to_visit = NULL;
   Path empty = {0, {0}};
+  Path starting = {1, {i}};
+
+  to_visit = enqueue_path(to_visit, starting);
+
+  while(to_visit != NULL) {
+    Path current;
+    dequeue_path(&to_visit, &current);
+
+    int recent = current.vertices_visited[current.steps - 1];
+
+    if (recent == j) {
+      return current;
+    }
+    
+
+    visited = add_to_set(visited, recent);
+
+    // find all of the neighbors of the current node
+    for(int neighbor = 0; neighbor < g->vertices; neighbor++) {
+      if (graph_has_edge(g, recent, neighbor) &&
+          !set_contains(visited, neighbor)) {
+        to_visit = enqueue_path(to_visit, path_extend(current, neighbor));
+      }
+    }
+    current.steps = current.steps + 1;
+  }
   return empty;
 }
 
 
 // Depth-first search!
 Path graph_find_path_dfs(Graph *g, int i, int j) {
-  // YOUR CODE HERE.
-
+  LLint *visited = NULL;
+  LLPath *to_visit = NULL;
+  Path starting = {1, {i}};
   Path empty = {0, {0}};
+
+  to_visit = enqueue_path(to_visit, starting);
+
+  while(to_visit != NULL) {
+    Path current;
+    dequeue_path(&to_visit, &current);
+
+    int recent = current.vertices_visited[current.steps - 1];
+
+    if (recent == j) {
+      return current;
+    }
+    
+
+    visited = add_to_set(visited, recent);
+
+    // find all of the neighbors of the current node
+    for(int neighbor = 0; neighbor < g->vertices; neighbor++) {
+      if (graph_has_edge(g, recent, neighbor) &&
+          !set_contains(visited, neighbor)) {
+        to_visit = enqueue_path(to_visit, path_extend(current, neighbor));
+      }
+    }
+    current.steps = current.steps + 1;
+  }
   return empty;
 }
+
