@@ -130,10 +130,32 @@ void print_path(Path path) {
   puts("");
 }
 
-void graph_destroy(Graph **g) {
-  
+void graph_destroy(Graph **g) { //based off the delete function from hw3
+  for(int i = 0; i < (*g)->vertices; i++) {
+    free((*g)->matrix[i]);
+  }
+  free((*g)->matrix);
+  free(*g);
+  *g = NULL;
 }
 
+void freeingPath(LLPath **path) { //Rohan helped me w this
+  Path x;
+  bool done = true;
+  while(done) {
+    done = dequeue_path(path, &x);
+  };
+}
+
+void freeingInt(LLint **x) { //Rohan helped me w this
+  LLint *curr = (*x);
+  while(curr != NULL) {
+    LLint *temp = curr;
+    curr = curr->next;
+    free(temp);
+  }
+  (*x) = NULL;
+}
 // Breadth-first search!
 Path graph_find_path_bfs(Graph *g, int i, int j) {
   LLint *visited = NULL;
@@ -150,6 +172,8 @@ Path graph_find_path_bfs(Graph *g, int i, int j) {
     int recent = current.vertices_visited[current.steps - 1];
 
     if (recent == j) {
+      freeingPath(&to_visit);
+      freeingInt(&visited);
       return current;
     }
     
@@ -165,6 +189,8 @@ Path graph_find_path_bfs(Graph *g, int i, int j) {
     }
     current.steps = current.steps + 1;
   }
+  freeingPath(&to_visit);
+  freeingInt(&visited);
   return empty;
 }
 
@@ -185,13 +211,15 @@ Path graph_find_path_dfs(Graph *g, int i, int j) {
     int recent = current.vertices_visited[current.steps - 1];
 
     if (recent == j) {
+      freeingPath(&to_visit);
+      freeingInt(&visited);
       return current;
     }
     
     visited = add_to_set(visited, recent);
 
     // find all of the neighbors of the current node
-    for(int neighbor = g->vertices - 1; neighbor > 0; neighbor--) {
+    for(int neighbor = g->vertices - 1; neighbor > 0; neighbor--) { //Rohan helped with the - 1 part since it was not working before
       if (graph_has_edge(g, recent, neighbor) &&
           !set_contains(visited, neighbor)) {
         to_visit = push(to_visit, path_extend(current, neighbor));
@@ -199,6 +227,8 @@ Path graph_find_path_dfs(Graph *g, int i, int j) {
     }
     current.steps = current.steps + 1;
   }
+  freeingPath(&to_visit);
+  freeingInt(&visited);
   return empty;
 }
 
