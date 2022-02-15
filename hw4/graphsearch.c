@@ -59,12 +59,29 @@ bool dequeue_path(LLPath **q, Path *ret) {
 
 }
 
-LLPath *push(LLPath *s Path x ) {
-  
+LLPath *push(LLPath *s, Path x ) {
+  LLPath *newnode = calloc(1, sizeof(LLPath));
+  if (s == NULL) {
+    newnode->val = x;
+    newnode->next = s;
+    return newnode;
+  }
+  newnode->val = x;
+  newnode->next = s;
+  return newnode;
 }
 
 bool pop(LLPath **s, Path *y) {
+  if (*s == NULL) {
+    return false;
+  }
 
+  *y = (*s)->val;
+  
+  LLPath *deletethis = *s;
+  *s = (*s)->next;
+  free(deletethis);
+  return true;
 }
 
 // We wrote these in class.
@@ -113,6 +130,10 @@ void print_path(Path path) {
   puts("");
 }
 
+void graph_destroy(Graph **g) {
+  
+}
+
 // Breadth-first search!
 Path graph_find_path_bfs(Graph *g, int i, int j) {
   LLint *visited = NULL;
@@ -155,11 +176,11 @@ Path graph_find_path_dfs(Graph *g, int i, int j) {
   Path starting = {1, {i}};
   Path empty = {0, {0}};
 
-  to_visit = enqueue_path(to_visit, starting);
+  to_visit = push(to_visit, starting);
 
   while(to_visit != NULL) {
     Path current;
-    dequeue_path(&to_visit, &current);
+    pop(&to_visit, &current);
 
     int recent = current.vertices_visited[current.steps - 1];
 
@@ -167,14 +188,13 @@ Path graph_find_path_dfs(Graph *g, int i, int j) {
       return current;
     }
     
-
     visited = add_to_set(visited, recent);
 
     // find all of the neighbors of the current node
-    for(int neighbor = 0; neighbor < g->vertices; neighbor++) {
+    for(int neighbor = g->vertices - 1; neighbor > 0; neighbor--) {
       if (graph_has_edge(g, recent, neighbor) &&
           !set_contains(visited, neighbor)) {
-        to_visit = enqueue_path(to_visit, path_extend(current, neighbor));
+        to_visit = push(to_visit, path_extend(current, neighbor));
       }
     }
     current.steps = current.steps + 1;
