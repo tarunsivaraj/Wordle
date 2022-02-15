@@ -144,7 +144,7 @@ void freeingPath(LLPath **path) { //Rohan helped me w this
   bool done = true;
   while(done) {
     done = dequeue_path(path, &x);
-  };
+  }
 }
 
 void freeingInt(LLint **x) { //Rohan helped me w this
