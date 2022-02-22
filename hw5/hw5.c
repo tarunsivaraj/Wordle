@@ -90,7 +90,13 @@ char **load_vocabulary(char *filename, size_t *num_words) {
       out = (char**)calloc (1 ,sizeof(char*));
     }else{
 //      printf("realloc: %zu, size: %lu", *num_words, sizeof(char*)*(*num_words));
-      out = (char**)realloc(out, sizeof(char*)*(*num_words));
+      char **temp = (char**)realloc(out, sizeof(char*)*(*num_words));
+
+      if(temp != NULL) {
+        out = temp;
+      }else{
+        free(temp);
+      }
     }
     out[n] = in;
 //    printf("second one: ");
