@@ -12,7 +12,7 @@ int helper(int value, BinaryTree *tree, int depth_counter) {
     return depth_counter;
   }
 //  depth_counter++;
-  printf("%d", depth_counter);
+//  printf("%d", depth_counter);
 
   int left = helper(value, tree->left, depth_counter + 1);
 
