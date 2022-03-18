@@ -2,10 +2,10 @@ CC = clang
 
 # Make sure to use the full CFLAGS before turning in. Uncomment this for lax
 # checking during development, if you need to.
-CFLAGS = -g
+#CFLAGS = -g
 
 # You can use the strict compiler flags if you like -- it may help in debugging! 
-# CFLAGS = -Wall -Wpedantic -Werror -Wextra
+CFLAGS = -Wall -Wpedantic -Werror -Wextra
 
 
 all: one_test two_test three_test four_test

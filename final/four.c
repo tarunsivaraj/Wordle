@@ -10,6 +10,8 @@ WordCountTable *sum_word_count_tables(WordCountTable *table_a,
   // Your code here! You can change whatever you want in this function.
   // return an empty one just so we don't crash.
   WordCountTable *out = build_word_count_table(table_a->num_buckets);
+  out = build_word_count_table(table_b->num_buckets);
+  
 
   return out;
 }
